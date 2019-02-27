@@ -1,0 +1,116 @@
+{% extends "portal/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Search Jobs{% endblock %}
+
+{% block body %}
+
+    <div class="container text-center">
+        <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+        <h3 class="text-center">Search Jobs</h3>
+        <hr><br>
+
+        <form method="get">
+            <div class="form-row">
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.role|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.experience|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.salary_from|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.salary_upto|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+               <div class="form-group col-md-3 mb-0">
+                {{ filter.form.industry|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.city|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3">
+                <label>.</label>
+                  <a href="{% url 'portal:job_search' %}"><input type="button" class=" form-control btn btn-danger btn-block" value="Reset"></a>
+              </div>
+              <div class="form-group col-md-3">
+                <label>.</label>
+                <input type="submit" class=" form-control btn btn-info btn-block " value="Search">
+              </div>
+            </div>
+        </form>
+        <hr>
+
+
+
+        {% if filter.qs %}
+
+            <div class="bg-light">
+            <br><br>
+              <div class="container">
+                <h3 class="text-center text-black">{{ filter.qs.count }} Jobs Found</h3>
+                <br>
+                {% for job in filter.qs %}
+
+                     <div class="row" data-aos="fade">
+                 <div class="col-md-12">
+                   <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+                      <div class="mb-4 mb-md-0 mr-5">
+                       <div class="job-post-item-header d-flex align-items-center">
+                           <h3 class="mr-3 text-black h4"><a href="{% url "portal:job_details" pk=job.id %}">{{ job.headline }}</a></h3>
+                         <div class="badge-wrap">
+                          <span class="bg-warning text-white badge py-2 px-4">{{ job.job_type }}</span>
+                         </div>
+                       </div>
+                       <div class="job-post-item-body d-block d-md-flex">
+                         <div class="mr-3"><span class="fl-bigmug-line-portfolio23"> </span>{{ job.company_name }}</div>
+                         <div><span class="fl-bigmug-line-big104"></span> <span>{{ job.city }}</span></div>
+                       </div>
+                      </div>
+                      <div class="ml-auto">
+                        <a href="#" class="btn btn-danger rounded-circle btn-favorite active"><span class="icon-heart"></span></a>
+                        <a href="{% url "portal:job_details" pk=job.id %}" class="btn btn-primary py-2">View Job</a>
+                      </div>
+
+                   </div>
+                 </div>
+                </div>
+                {% endfor %}
+
+
+                <div class="row mt-5">
+                  <div class="col-md-12 text-center">
+                    <div class="site-block-27">
+                      <ul>
+                        <li><a href="#"><i class="icon-keyboard_arrow_left h5"></i></a></li>
+                        <li class="active"><span>1</span></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#"><i class="icon-keyboard_arrow_right h5"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <br>
+
+              </div>
+            </div>
+
+<br><br><br><Br>
+        {% else %}
+            <br>
+            <h4>No Jobs Found</h4>
+            <br>
+        {% endif %}
+
+        <a href="{% url 'portal:home' %}"><button class="btn btn-info" type="button">Back To Home</button></a>
+
+    </div>
+
+{% endblock %}

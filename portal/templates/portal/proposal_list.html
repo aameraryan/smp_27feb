@@ -1,0 +1,98 @@
+{#{% extends "portal/base.html" %}#}
+{##}
+{#{% block title %}Profile{% endblock %}#}
+{##}
+{#{% block body %}#}
+{#    {% if candidate %}#}
+{#        <div class="jumbotron container text-cneter">#}
+{#            {% if messages %}#}
+{#                {% for message in messages %}#}
+{#                    <span class="alert  alert-success">{{ message }}</span>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
+{#            <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary fa fa-arrow-left"></button></a>#}
+{#            <h4 class="text-center">My Proposals</h4><br>#}
+{##}
+{#            <table class="table table-stripped table-hover">#}
+{#                <tr>#}
+{#                    <td>No.</td>#}
+{#                    <td>Job</td>#}
+{#                    <td>On</td>#}
+{#                </tr>#}
+{#                {% for proposal in proposals %}#}
+{#                    <tr>#}
+{#                        <td>{{ forloop.counter }}</td>#}
+{#                        <td><a href="{% url "portal:proposal_details" pk=proposal.id %}"> {{ proposal.job.headline }}</a></td>#}
+{#                        <td>{{ proposal.on }}</td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </table>#}
+{#            <hr><br>#}
+{#            {% if is_paginated %}#}
+{#                <div class="pagination">#}
+{#                    <span class="page-links">#}
+{#                        {% if page_obj.has_previous %}#}
+{#                            <a href="?page={{page_obj.previous_page_number }}">previous</a>#}
+{#                        {% endif %}#}
+{#                        <span class="page-current">#}
+{#                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
+{#                        </span>#}
+{#                        {% if page_obj.has_next %}#}
+{#                            <a href="?page={{ page_obj.next_page_number }}">next</a>#}
+{#                        {% endif %}#}
+{#                    </span>#}
+{#                </div>#}
+{#            {% endif %}#}
+{##}
+{#            <a href="{% url 'portal:home' %}"><button class="btn btn-info" type="button">Back To Home</button></a>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
+
+
+
+{% extends "portal/base.html" %}
+
+{% block title %}My Proposals{% endblock %}
+
+{% block body %}
+    {% if candidate %}
+        <div class="container text-cneter">
+           <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+            <h3 class="text-black text-center">Proposal</h3>
+            <hr><br>
+            <table class="table table-stripped table-hover table-bordered">
+                <tr>
+                    <td>No.</td>
+                    <td>Job</td>
+                    <td>On</td>
+                </tr>
+                {% for proposal in proposals %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url "portal:proposal_details" pk=proposal.id %}"> {{ proposal.job.headline }}</a></td>
+                        <td>{{ proposal.on }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <hr><br>
+            {% if is_paginated %}
+                <div class="pagination">
+                    <span class="page-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                        <span class="page-current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        {% endif %}
+                    </span>
+                </div>
+            {% endif %}
+
+            <a href="{% url 'portal:home' %}"><button class="btn btn-info" type="button">Back To Home</button></a>
+        </div>
+    {% endif %}
+{% endblock %}

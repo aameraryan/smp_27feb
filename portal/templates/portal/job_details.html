@@ -1,0 +1,51 @@
+{% extends "portal/base.html" %}
+
+{% block title %}{{ job.headline }}{% endblock %}
+
+{% block body %}
+    {% if job %}
+        <div class="container text-cneter">
+                <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+                <h5 class="text-center">{{ job.headline }}</h5>
+                <hr><br>
+            <table class="table table-stripped table-bordered table-hover">
+                <tr>
+                    <td >Role</td><td  >{{ job.role }}</td>
+                </tr>
+                <tr>
+                    <td >Salary Range</td><td  >{{ job.get_salary_range }}</td>
+                </tr>
+                <tr>
+                    <td >City</td><td  >{{ job.city }}</td>
+                </tr>
+                <tr>
+                    <td >Experience</td><td  >{{ job.experience }}</td>
+                </tr>
+                <tr>
+                    <td>Job Nature</td><td>{{ job.job_type }}</td>
+                </tr>
+                <tr>
+                    <td >Qualification</td><td  >{% for qualification in job.qualifications.all %}{{ qualification }}, {% endfor %}</td>
+                </tr>
+                <tr>
+                    <td >Email</td><td  >{{ job.email }}</td>
+                </tr>
+                <tr>
+                    <td >Phone</td><td  >{{ job.phone }}</td>
+                </tr>
+                <tr>
+                    <td >Industry</td><td  >{{ job.industry }}</td>
+                </tr>
+                <tr>
+                    <td >Description</td><td  >{{ job.description }}</td>
+                </tr>
+            </table>
+                    {% if have_proposal %}
+                        <a href="{% url "portal:proposal_details" pk=have_proposal.id %}"><button class="btn bg-primary text-white">Proposal Already Sent.</button></a>
+                    {% else %}
+                        <a href="{% url "portal:proposal_add" job_id=job.id %}"><button class="btn bg-primary text-white">Send Proposal</button></a>
+                    {% endif %}
+            <hr><br>
+        </div>
+    {% endif %}
+{% endblock %}

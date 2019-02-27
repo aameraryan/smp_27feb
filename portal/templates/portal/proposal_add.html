@@ -1,0 +1,55 @@
+{% extends "portal/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Proposal | {{ job.headline }}{% endblock %}
+
+{% block body %}
+        {% if form_invalid %}
+            <span class="alert alert-danger">{{ form_invalid }}</span>
+        {% endif %}
+        <div class="container text-cneter">
+            <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+            <h3 class="text-black text-center">Send  Proposal</h3>
+            <hr>
+            <br>
+            <dl>
+                <dd>
+                    <table class="table table-stripped table-bordered">
+                        <tr>
+                            <td >Role</td><td  >{{ job.role }}</td>
+                        </tr>
+                        <tr>
+                            <td >Salary Range</td><td  >{{ job.get_salary_range }}</td>
+                        </tr>
+                        <tr>
+                            <td >City</td><td  >{{ job.city }}</td>
+                        </tr>
+                        <tr>
+                            <td >Experience</td><td  >{{ job.experience }}</td>
+                        </tr>
+                        <tr>
+                            <td>Job Nature</td><td>{{ job.job_type }}</td>
+                        </tr>
+                        <tr>
+                            <td >Qualification</td><td  >{% for qualification in job.qualifications.all %}{{ qualification }}, {% endfor %}</td>
+                        </tr>
+                        <tr>
+                            <td >Industry</td><td  >{{ job.industry }}</td>
+                        </tr>
+                        <tr>
+                            <td >Description</td><td  >{{ job.description }}</td>
+                        </tr>
+                    </table>
+                </dd>
+            </dl>
+            {% if form %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type="submit" class="btn bg-primary text-white font-weight-bold" value="Send Proposal">
+                    <a href="{% url "portal:job_details" pk=job.id%}"><button type="button" class="btn btn-danger">Cancel</button></a>
+
+                </form>
+            {% endif %}
+        </div>
+{% endblock %}

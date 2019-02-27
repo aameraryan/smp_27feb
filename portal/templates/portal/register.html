@@ -1,0 +1,20 @@
+{% extends "portal/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Candidate Register{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h3 class="text-center">Candidate Register</h3>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-primary font-weight-bold" type="submit">Register</button>
+            <br><br>
+            <a href="{% url "portal:login" %}"><span>Already have account ?</span></a>
+        </form>
+    </div>
+
+{% endblock %}

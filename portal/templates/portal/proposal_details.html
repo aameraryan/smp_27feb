@@ -1,0 +1,32 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Proposal | {{ proposal.job.headline }}{% endblock %}
+
+{% block body %}
+    {% if proposal %}
+        <div class="container text-cneter">
+           <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+            <h3 class="text-black text-center">Proposal</h3>
+        <hr><br>
+
+            <table class="table table-stripped table-bordered table-hover">
+                <tr>
+                    <td class="info">Job</td><td><a href="{% url "portal:job_details" pk=proposal.job.id %}">{{ proposal.job.headline }}</a></td>
+                </tr>
+                <tr>
+                    <td>Message</td>
+                    <td>{{ proposal.message }}</td>
+                </tr>
+                <tr>
+                    <td>On</td>
+                    <td>{{ proposal.on }}</td>
+                </tr>
+
+            </table>
+            <a href="{% url "portal:proposal_update" proposal_id=proposal.id %}"><button style="margin: 10px" class="btn bg-primary text-white font-weight-bold">Update proposal</button></a>
+            <a href="{% url "portal:proposal_delete" proposal_id=proposal.id %}"><button style="margin: 10px" class="btn btn-danger">Delete proposal</button></a>
+            <a href="{% url "portal:proposal_list" %}"><button style="margin: 10px;float: right" class="btn btn-primary text-white">My Proposals</button></a>
+            <hr><br>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "portal/base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    {% if candidate %}
+
+        <div class="container text-center">
+
+            <h3>My Profile</h3>
+
+            <hr><br>
+            <table class="table table-stripped table-bordered table-hover">
+                <tr>
+                    <td>First Name</td><td>{{ candidate.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>Last Name</td><td>{{ candidate.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>Full Name</td><td>{{ candidate.full_name }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td><td >{{ candidate.email }}</td>
+                </tr>
+                <tr>
+                    <td>Phone</td><td>{{ candidate.phone }}</td>
+                </tr>
+                <tr>
+                    <td>Address</td><td>{{ candidate.address }}</td>
+                </tr>
+                <tr>
+                    <td>City</td><td>{{ candidate.city }}</td>
+                </tr>
+                <tr>
+                    <td>Qualification</td><td>{{ candidate.qualification }}</td>
+                </tr>
+                <tr>
+                    <td>Experience</td><td>{{ candidate.experience }}</td>
+                </tr>
+               <tr>
+                    <td>Industry</td><td>{{ candidate.industry }}</td>
+                </tr>
+                <tr>
+                    <td>Resume</td>
+                    <td>
+                        {% if candidate.get_resume_link %}<a href={{ candidate.get_resume_link }}><button type="button" class="btn">Download</button></a>
+                        {% else %}Not Uploaded{% endif %}
+                    </td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>Skills</td><td>{% for skill in candidate.skills.all %}{{ skill }}  |  {% endfor %}</td>
+                </tr>
+                <tr>
+                    <td>Roles</td><td>{% for skill in candidate.roles.all %}{{ skill }}  |  {% endfor %}</td>
+                </tr>
+            </table>
+            <dl>
+                <dt>Extra Details</dt>
+                <dd>{{ candidate.details }}</dd>
+            </dl>
+            <br>
+            <a href="{% url "portal:update_profile" %}"><button class="btn btn-primary white-text font-weight-bold">Update Profile</button></a>
+        </div>
+    {% endif %}
+{% endblock %}

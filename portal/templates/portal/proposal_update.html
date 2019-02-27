@@ -1,0 +1,26 @@
+{% extends "portal/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update Proposal{% endblock %}
+
+{% block body %}
+        {% if form_invalid %}
+            <span class="alert alert-danger">{{ form_invalid }}</span>
+        {% endif %}
+        <div class="container text-cneter">
+
+           <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+            <h3 class="text-black text-center">Update Proposal</h3>
+            <hr><br>
+
+            {% if form %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table class="table table-stripped">
+                        {{ form|crispy }}
+                    </table>
+                    <button type="submit" class="btn bg-primary text-white font-weight-bold">Update Proposal</button>
+                </form>
+            {% endif %}
+        </div>
+{% endblock %}

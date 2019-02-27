@@ -1,0 +1,14 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Email Sent | Candidate Register{% endblock %}
+
+
+{% block body %}
+    <div class="text-center container">
+        <h3>Forget Password Verification</h3>
+        <hr>
+        <h5>A mail is sent to your email.
+            Please confirm your email address to complete the registration. </h5><br>
+        <a href="{% url "portal:home" %}"><button class="btn bg-primary text-white font-weight-bold">Go To Home</button> </a>
+    </div>
+{% endblock %}
