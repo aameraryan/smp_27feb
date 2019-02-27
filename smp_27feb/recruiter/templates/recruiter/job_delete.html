@@ -1,0 +1,28 @@
+{% extends "recruiter/base.html" %}
+
+{% block title %}Delete Job | {{ proposal.job.headline }}{% endblock %}
+
+{% block body %}
+    {% if job %}
+        <div class="container text-cneter">
+            <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+            <h3 class="text-black text-center">Delete Job</h3>
+            <hr><br>
+            <form method="post" action="{% url "recruiter:job_delete" job_id=job.id %}">
+                {% csrf_token %}
+                <br>
+                <p>Job : {{ job.headline }}</p>
+                <h4>Do you really want to delete this Job ?</h4>
+                <br>
+                <div class="container text-center">
+                    <input class=" col-md-2 btn btn-danger" value="YES" type="submit">
+                    <a href="{% url "recruiter:job_details" pk=job.id%}" class="col-md-2 btn bg-primary text-black">NO</a>
+                </div>
+
+            </form>
+
+
+            <hr><br>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "recruiter/base.html" %}
+
+{% block title %}{{ recruiter.full_name }} | Profile{% endblock %}
+
+{% block body %}
+    {% if recruiter %}
+
+        <div class="container text-center">
+
+            <h3>My Profile</h3>
+
+            <hr><br>
+            <table class="table table-stripped table-bordered table-hover">
+                <tr>
+                    <td>Full Name</td><td>{{ recruiter.full_name }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td><td >{{ recruiter.email }}</td>
+                </tr>
+                <tr>
+                    <td>Phone</td><td>{{ recruiter.phone }}</td>
+                </tr>
+                <tr>
+                    <td>Recruiter Type</td><td>{{ recruiter.recruiter_type }}</td>
+                </tr>
+            </table>
+            <dl>
+                <dt>Extra Details</dt>
+                <dd>{{ recruiter.details }}</dd>
+            </dl>
+            <br>
+            <a href="{% url "recruiter:update_profile" %}"><button class="btn btn-primary white-text font-weight-bold">Update Profile</button></a>
+        </div>
+    {% endif %}
+{% endblock %}

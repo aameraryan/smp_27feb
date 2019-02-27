@@ -1,0 +1,121 @@
+{% extends "recruiter/base.html" %}
+
+{% block title %}{{ candidate.full_name }}{% endblock %}
+
+{% block body %}
+    {% if candidate %}
+        <div class="container text-cneter">
+                <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+                <h5 class="text-center">{{ candidate.full_name }}</h5>
+                <hr><br>
+            <table class="table table-stripped table-bordered table-hover">
+                <tr>
+                    <td >Name</td><td  >{{ candidate.full_name }}</td>
+                </tr>
+                <tr>
+                    <td >City</td><td  >{{ candidate.city }}</td>
+                </tr>
+                <tr>
+                    <td >Experience</td><td  >{{ candidate.experience }}</td>
+                </tr>
+                <tr>
+                    <td >Qualification</td><td  >{{ candidate.qualification }}</td>
+                </tr>
+                <tr>
+                    <td >Email</td><td  >{{ candidate.email }}</td>
+                </tr>
+                <tr>
+                    <td >Phone</td><td  >{{ candidate.phone }}</td>
+                </tr>
+                <tr>
+                    <td >Industry</td><td  >{{ candidate.industry }}</td>
+                </tr>
+                <tr>
+                    <td >Roles</td><td  >{% for role in candidate.roles.all %}{{ role }}, {% endfor %}</td>
+                </tr>
+                <tr>
+                    <td>Resume</td>
+                    <td>
+                        {% if candidate.get_resume_link %}<a href={{ candidate.get_resume_link }}><button type="button" class="btn">Download</button></a>
+                        {% else %}Not Uploaded{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td >Description</td><td  >{{ candidate.details }}</td>
+                </tr>
+            </table>
+
+                    {% if not candidate_liked %}
+                        <a href="{% url "recruiter:candidate_like" candidate_id=candidate.id %}"><button class="btn bg-primary text-white font-weight-bold">Like</button></a>
+                    {% else %}
+                        <a href="{% url "recruiter:candidate_unlike" candidate_id=candidate.id %}"><button class="btn bg-warning text-white font-weight-bold">Unlike</button></a>
+                    {% endif %}
+            <hr><br>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+{##}
+{##}
+{##}
+{##}
+{#{% extends "recruiter/base.html" %}#}
+{##}
+{#{% block title %}{{ candidate.full_name }}{% endblock %}#}
+{##}
+{#{% block body %}#}
+{#    {% if candidate %}#}
+{#        <div class="container text-cneter">#}
+{#            {% if messages %}#}
+{#                {% for message in messages %}#}
+{#                    <span class="alert  alert-success">{{ message }}</span>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
+{#            <h3>{{ candidate.name }}</h3>#}
+{##}
+{#            <table class="table table-stripped table-bordered table-hover">#}
+{#                <tr>#}
+{#                    <td >Name</td><td  >{{ candidate.name }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >City</td><td  >{{ candidate.city }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >Zip Code</td><td  >{{ candidate.zip_code }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >Experience</td><td  >{{ candidate.experience }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >Qualification</td><td  >{{ candidate.qualification }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >Email</td><td  >{{ candidate.email }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >Phone</td><td  >{{ candidate.phone }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >Industry</td><td  >{{ candidate.industry }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >Role</td><td  >{{ candidate.role }}</td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td >Details</td><td  >{{ candidate.details }}</td>#}
+{#                </tr>#}
+{#            </table>#}
+{#                {% if not candidate_liked %}#}
+{#                    <a href="{% url "recruiter:candidate_like" candidate_id=candidate.id %}"><button class="btn btn-primary">Like</button></a>#}
+{#                {% else %}#}
+{#                    <a href="{% url "recruiter:candidate_unlike" candidate_id=candidate.id %}"><button class="btn btn-primary">Unlike</button></a>#}
+{#                {% endif %}#}
+{#                    <a href="{% url "recruiter:candidate_search" %}"><button class="btn btn-info">Go Back</button></a>#}
+{#            <hr><br>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#{% endblock %}#}

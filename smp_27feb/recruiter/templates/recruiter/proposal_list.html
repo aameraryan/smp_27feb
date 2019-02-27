@@ -1,0 +1,107 @@
+{#{% extends "recruiter/base.html" %}#}
+{##}
+{#{% block title %}Profile{% endblock %}#}
+{##}
+{#{% block body %}#}
+{#    {% if recruiter %}#}
+{#        <div class="container text-cneter">#}
+{#            {% if messages %}#}
+{#                {% for message in messages %}#}
+{#                    <span class="alert  alert-success">{{ message }}</span>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
+{#            <h3>{{ recruiter.company_name }}</h3>#}
+{##}
+{#            <table class="table table-stripped table-hover">#}
+{#                <tr>#}
+{#                    <td>No.</td>#}
+{#                    <td>Job</td>#}
+{#                    <td>Posted by</td>#}
+{#                    <td>On</td>#}
+{#                    <td>message</td>#}
+{#                </tr>#}
+{#                {% for proposal in proposals %}#}
+{#                    <tr>#}
+{#                        <td>{{ forloop.counter }}</td>#}
+{#                        <td><a href="{% url "recruiter:proposal_details" pk=proposal.id %}"> {{ proposal.job.headline }}</a></td>#}
+{#                        <td>{{ proposal.posted_by }}</td>#}
+{#                        <td><a href="{% url "recruiter:view_candidate" candidate_id=proposal.canidate.id %}">{{ proposal.candidate }}</a></td>#}
+{#                        <td>{{ proposal.on }}</td>#}
+{#                        <td>{{ proposal.message }}</td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </table>#}
+{##}
+{#            <hr><br>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
+
+
+{% extends "recruiter/base.html" %}
+
+{% block title %}My Proposals{% endblock %}
+
+{% block body %}
+    {% if proposals %}
+        <div class="container text-cneter">
+                <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+                <h3 class="text-center">{{ proposals.count }} Proposals Received</h3>
+                <hr><br>
+
+            <div class="bg-light">
+            <br><br>
+              <div class="container">
+
+                {% for proposal in proposals %}
+
+                     <div class="row" data-aos="fade">
+                 <div class="col-md-12">
+                   <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+                      <div class="mb-4 mb-md-0 mr-5">
+                       <div class="job-post-item-header d-flex align-items-center">
+                           <h3 class="mr-3 text-black h4"><a href="{% url "recruiter:candidate_details" pk=proposal.posted_by.id %}"><i class="icon icon-user"></i> {{ proposal.posted_by }}</a></h3>
+                         <div class="badge-wrap">
+                          <span class="bg-danger text-white badge py-2 px-4">{{ proposal.on|date:"d M Y" }}</span>
+                         </div>
+                       </div>
+                       <div class="job-post-item-body d-block d-md-flex">
+                           <div class="mr-3 text-success"><span class="fl-bigmug-line-portfolio23"> </span><a class="text-success" href="{% url "recruiter:job_details" pk=proposal.job.id %}">{{ proposal.job.headline }}</a></div>
+                       </div>
+                      </div>
+                      <div class="ml-auto">
+                        <a href="{% url "recruiter:proposal_details" pk=proposal.id %}" class="btn btn-primary py-2">View Proposal</a>
+                      </div>
+
+                   </div>
+                 </div>
+                </div>
+                {% endfor %}
+
+
+                <div class="row mt-5">
+                  <div class="col-md-12 text-center">
+                    <div class="site-block-27">
+                      <ul>
+                        <li><a href="#"><i class="icon-keyboard_arrow_left h5"></i></a></li>
+                        <li class="active"><span>1</span></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#"><i class="icon-keyboard_arrow_right h5"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <br>
+
+              </div>
+            </div>
+
+
+
+        </div>
+    {% endif %}
+{% endblock %}

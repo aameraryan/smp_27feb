@@ -1,0 +1,131 @@
+{% extends "recruiter/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Search Candidates{% endblock %}
+
+{% block body %}
+
+    <div class="container text-center">
+        <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+        <h3 class="text-center">Search Candidates</h3>
+        <hr><br>
+
+        <form method="get">
+            <div class="form-row">
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.qualification|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.experience|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.industry|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.city|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.roles|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3 mb-0">
+                {{ filter.form.skills|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-3">
+                <label>.</label>
+                  <a href="{% url 'recruiter:candidate_search' %}"><input type="button" class=" form-control btn btn-danger btn-block" value="Reset"></a>
+              </div>
+              <div class="form-group col-md-3">
+                <label>.</label>
+                <input type="submit" class=" form-control btn btn-info btn-block " value="Search">
+              </div>
+            </div>
+        </form>
+        <hr>
+
+
+        {% if filter.qs %}
+
+            <div class="bg-light">
+            <br><br>
+              <div class="container">
+                <h3 class="text-center text-black">{{ filter.qs.count }} Candidates Found</h3>
+                <br>
+                {% for candidate in filter.qs %}
+
+                     <div class="row" data-aos="fade">
+                 <div class="col-md-12">
+                   <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+                      <div class="mb-4 mb-md-0 mr-5">
+                       <div class="job-post-item-header d-flex align-items-center">
+                           <h3 class="mr-3 text-black h4"><a href="{% url "recruiter:candidate_details" pk=candidate.id %}">{{ candidate.full_name }}</a></h3>
+                         <div class="badge-wrap">
+                          <span class="bg-warning text-white badge py-2 px-4">{{ candidate.qualification   }}</span>
+                         </div>
+                       </div>
+                       <div class="job-post-item-body d-block d-md-flex">
+                         <div class="mr-3"><span class="fl-bigmug-line-portfolio23"> </span>{% for skill in candidate.skills.all %}{{ skill }}, {% endfor %}</div>
+                         <div><span class="fl-bigmug-line-big104"></span> <span>{{ candidate.city }}</span></div>
+                       </div>
+                      </div>
+                      <div class="ml-auto">
+                        <a href="{% url "recruiter:candidate_like" candidate_id=candidate.id %}" class="btn btn-danger rounded-circle btn-favorite active"><span class="icon-heart"></span></a>
+                        <a href="{% url "recruiter:candidate_details" pk=candidate.id %}" class="btn btn-primary py-2">View Candidate</a>
+                      </div>
+
+                   </div>
+                 </div>
+                </div>
+                {% endfor %}
+
+                {% if is_paginated %}
+                <div class="pagination">
+                    <span class="page-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                        <span class="page-current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        {% endif %}
+                    </span>
+                </div>
+            {% endif %}
+
+
+                <div class="row mt-5">
+                  <div class="col-md-12 text-center">
+                    <div class="site-block-27">
+                      <ul>
+                        <li><a href="#"><i class="icon-keyboard_arrow_left h5"></i></a></li>
+                        <li class="active"><span>1</span></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#"><i class="icon-keyboard_arrow_right h5"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <br>
+
+              </div>
+            </div>
+
+<br><br><br><Br>
+        {% else %}
+            <br>
+            <h4>No Candidates Found</h4>
+            <br>
+        {% endif %}
+
+        <a href="{% url 'portal:home' %}"><button class="btn btn-info" type="button">Back To Home</button></a>
+
+    </div>
+
+{% endblock %}

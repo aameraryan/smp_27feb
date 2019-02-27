@@ -1,0 +1,86 @@
+{% extends "recruiter/base.html" %}
+
+{% block title %}Liked Candidates{% endblock %}
+
+{% block body %}
+    <br>
+    <div class="container text-center">
+                <a onClick="javascript:history.go(-1);"><button style="float: left" class="btn btn-primary icon icon-arrow-left"></button></a>
+                <h3 class="text-center text-black">{{ candidate_likes|length }} Candidates Liked</h3>
+                <hr><br>
+
+        {% if candidate_likes %}
+
+            <div class="bg-light">
+            <br><br>
+              <div class="container">
+                <br>
+                {% for candidate in candidate_likes %}
+
+                     <div class="row" data-aos="fade">
+                 <div class="col-md-12">
+                   <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+                      <div class="mb-4 mb-md-0 mr-5">
+                       <div class="job-post-item-header d-flex align-items-center">
+                           <h3 class="mr-3 text-black h4"><a href="{% url "recruiter:candidate_details" pk=candidate.id %}">{{ candidate.full_name }}</a></h3>
+                         <div class="badge-wrap">
+                          <span class="bg-warning text-white badge py-2 px-4">{{ candidate.qualification }} | {{ candidate.experience }} yrs</span>
+                         </div>
+                       </div>
+                       <div class="job-post-item-body d-block d-md-flex">
+                         <div class="mr-3"><span class="fl-bigmug-line-portfolio23"> </span>{% for skill in candidate.skills.all %}{{ skill }}, {% endfor %}</div>
+                         <div><span class="fl-bigmug-line-big104"></span> <span>{{ candidate.city }}</span></div>
+                       </div>
+                      </div>
+                      <div class="ml-auto">
+                        <a href="{% url "recruiter:candidate_like" candidate_id=candidate.id %}" class="btn btn-danger rounded-circle btn-favorite active"><span class="icon-heart"></span></a>
+                        <a href="{% url "recruiter:candidate_details" pk=candidate.id %}" class="btn btn-primary py-2">View Candidate</a>
+                      </div>
+
+                   </div>
+                 </div>
+                </div>
+                {% endfor %}
+
+               {% if is_paginated %}
+                <div class="pagination">
+                    <span class="page-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                        <span class="page-current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        {% endif %}
+                    </span>
+                </div>
+            {% endif %}
+
+
+                <div class="row mt-5">
+                  <div class="col-md-12 text-center">
+                    <div class="site-block-27">
+                      <ul>
+                        {% if page_obj.has_previous %}
+                            <li><a href="#"><i class="icon-keyboard_arrow_left h5"></i></a></li>
+                        {% endif %}
+                        {% for page_n in 1|rjust:page_obj.paginator.num_pages %}
+                            <li href="?page={{ page_n }}" class="{% if page_n == page_obj.number %}active{% endif %}"><span>{{ page_n }}</span></li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}"><i class="icon-keyboard_arrow_right h5"></i></a></li>
+                        {% endif %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <br>
+
+              </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

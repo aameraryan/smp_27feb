@@ -1,0 +1,22 @@
+{% extends "recruiter/base.html" %}
+{% block body %}
+
+            <div class="jumbotron container text-center">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <span class="alert  alert-success">{{ message }}</span>
+                            {% endfor %}
+                        {% endif %}
+                <h1>Shadab Manpowers</h1>
+                {% if user.is_authenticated %}
+                    <a href="{% url "recruiter:profile" %}"><button class="btn btn-primary">Goto Profile</button></a>
+                    <a href="{% url "recruiter:job_post" %}"><button class="btn btn-primary">Post New Job</button></a>
+                    <a href="{% url "recruiter:job_list" %}"><button class="btn btn-primary">My Jobs</button></a>
+                    <a href="{% url "recruiter:proposal_list" %}"><button class="btn btn-primary">My Proposal</button></a>
+                    <a href="{% url "recruiter:candidate_search" %}"><button class="btn btn-primary">Search Candidates</button></a>
+                    <a href="{% url "recruiter:candidate_like_list" %}"><button class="btn btn-primary">Liked Candidates</button></a>
+                    <a href="{% url "recruiter:account" %}"><button class="btn btn-primary">Account</button></a>
+                {% endif %}
+            </div>
+
+{% endblock %}

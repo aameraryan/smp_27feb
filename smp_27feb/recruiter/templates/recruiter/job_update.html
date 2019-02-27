@@ -1,0 +1,23 @@
+{% extends "recruiter/base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+        {% if form_invalid %}
+            <span class="alert alert-danger">{{ form_invalid }}</span>
+        {% endif %}
+        <div class="jumbotron container text-cneter">
+            <h3>{{ job.headline }}</h3>
+            {% if form %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table class="table table-stripped">
+                        {{ form.as_table }}
+                    </table>
+                    <button type="submit" class="btn btn-info">Update</button>
+                    <a href="{% url "recruiter:job_list" %}"><button type="button" class="btn btn-danger">Cancel</button></a>
+
+                </form>
+            {% endif %}
+        </div>
+{% endblock %}
